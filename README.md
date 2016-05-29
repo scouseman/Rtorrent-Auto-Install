@@ -34,7 +34,7 @@ Actual version for the scripts:
 
 Download the script. Remember to change the X.X.X to the actual version.
 
-	wget https://raw.githubusercontent.com/Kerwood/rtorrent.auto.install/master/Rtorrent-Auto-Install-4.0.0-Debian-Jessie
+	https://github.com/scouseman/Rtorrent-Auto-Install/blob/master/Rtorrent-Auto-Install-4.0.0-Debian-Jessie
 
 Make it executable.
 

@@ -10,16 +10,10 @@ Check out the Rtorrent + Rutorrent Docker container. Get started with rtorrent i
 ## Manual install
 These are Bash scripts to ease the installation of rtorrent, rutorrent + plugins.
 
-**Debian Wheezy**
-The Wheezy script is of course developed for Wheezy but should run just fine on Ubuntu 13.04 and 14.04.
-
 **Debian Jessie**
 The Jessie script was adapted for the new default init system. Should run fine on systems that feature systemd (including Ubuntu 15.04+).
 
 Please use `systemctl start rtorrent` and `systemctl stop rtorrent` instead of the service command.
-
-**Raspbian Wheezy**
-Credit for the Raspbian script goes to [miracle091](https://github.com/miracle091), good work mate.
 
 **What the scripts do**
 In the installation process you have to choose a system user to run rtorrent.
@@ -35,22 +29,20 @@ Installation
 Installation video - https://www.youtube.com/watch?v=3iwsoKcUgn0
 
 Actual version for the scripts: 
-- Wheezy **4.0.0**
 - Jessie **4.0.0**
-- ~~Raspbian 3.0.2~~ - Not maintained, you can find it in the RaspberryPi branch.
-- ~~Raspbian Nginx 1.1.0~~ Not maintained, you can find it in the RaspberryPi branch.
+
 
 Download the script. Remember to change the X.X.X to the actual version.
 
-	wget https://raw.githubusercontent.com/Kerwood/rtorrent.auto.install/master/Rtorrent-Auto-Install-X.X.X-Debian-Wheezy
+	wget https://raw.githubusercontent.com/Kerwood/rtorrent.auto.install/master/Rtorrent-Auto-Install-4.0.0-Debian-Jessie
 
 Make it executable.
 
-	chmod +x Rtorrent-Auto-Install-X.X.X-Debian-Wheezy
+	chmod +x Rtorrent-Auto-Install-4.0.0-Debian-Jessie
 
 Run the script.
 
-	sudo ./Rtorrent-Auto-Install-X.X.X-Debian-Wheezy
+	sudo ./Rtorrent-Auto-Install-4.0.0-Debian-Jessie
 
 
 Installs

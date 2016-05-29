@@ -707,9 +707,7 @@ function SELECT_PLUGINS {
 # Function for installing dependencies
 function APT_DEPENDENCIES {
 	apt-get update
-	apt-get -y install openssl git apache2 apache2-utils build-essential libsigc++-2.0-dev \
-	libcurl4-openssl-dev automake libtool libcppunit-dev libncurses5-dev libapache2-mod-scgi \
-	php5 php5-curl php5-cli libapache2-mod-php5 tmux unzip libssl-dev curl
+	apt-get -y install openssl git  build-essential libsigc++-2.0-dev libcurl4-openssl-dev automake libtool libcppunit-dev libncurses5-dev  php5 php5-curl php5-cli libapache2-mod-php5 tmux unzip libssl-dev curl
 }
 
 # Function for setting up xmlrpc, libtorrent and rtorrent
@@ -804,57 +802,7 @@ function INSTALL_RUTORRENT {
 	chmod -R 775 /var/www/html/rutorrent
 }
 
-# Function for configuring apache
-function CONFIGURE_APACHE {
-	# Creating symlink for scgi.load
-	if [ ! -h /etc/apache2/mods-enabled/scgi.load ]; then
-		ln -s /etc/apache2/mods-available/scgi.load /etc/apache2/mods-enabled/scgi.load
-	fi
 
-	# Check if apache2 has port 80 enabled
-	if ! grep --quiet "^Listen 80$" /etc/apache2/ports.conf; then
-		echo "Listen 80" >> /etc/apache2/ports.conf;
-	fi
-
-	# Adding ServerName localhost to apache2.conf
-	if ! grep --quiet "^ServerName$" /etc/apache2/apache2.conf; then
-		echo "ServerName localhost" >> /etc/apache2/apache2.conf;
-	fi
-
-	# Creating Apache virtual host
-	if [ ! -f /etc/apache2/sites-available/001-default-rutorrent.conf ]; then
-
-		cat > /etc/apache2/sites-available/001-default-rutorrent.conf << EOF 
-<VirtualHost *:80>
-    #ServerName www.example.com
-    ServerAdmin webmaster@localhost
-    DocumentRoot /var/www/html
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-    CustomLog /var/log/apache2/rutorrent.log vhost_combined
-    ErrorLog /var/log/apache2/rutorrent_error.log
-    SCGIMount /rutorrent/RPC2 127.0.0.1:5000
-
-    <Directory "/var/www/html/rutorrent">
-        AuthName "Tits or GTFO"
-        AuthType Basic
-        Require valid-user
-        AuthUserFile /var/www/html/rutorrent/.htpasswd
-    </Directory>
-
-</VirtualHost>
-
-# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
-EOF
-		a2ensite 001-default-rutorrent.conf
-		a2dissite 000-default.conf
-		systemctl restart apache2.service
-	fi
-
-	# Creating .htaccess file
-	printf "%s\n" "${WEB_USER_ARRAY[@]}" > /var/www/html/rutorrent/.htpasswd
-}
 
 function INSTALL_FFMPEG {
 	printf "\n# ffpmeg mirror\ndeb http://www.deb-multimedia.org jessie main non-free\n" >> /etc/apt/sources.list
@@ -936,7 +884,6 @@ function START_RTORRENT {
 
 CHECK_ROOT
 LICENSE
-APACHE_UTILS
 rm -rf $TEMP_PLUGIN_DIR
 HEADER
 SET_RTORRENT_USER
@@ -982,7 +929,6 @@ while true; do
 			APT_DEPENDENCIES
 			INSTALL_RTORRENT
 			INSTALL_RUTORRENT
-			CONFIGURE_APACHE
 			INSTALL_SYSTEMD_SERVICE
 			START_RTORRENT
 			INSTALL_COMPLETE
